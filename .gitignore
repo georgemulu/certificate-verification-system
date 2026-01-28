@@ -1,0 +1,9 @@
+#environment files
+.env
+
+#dependencies
+/vendor/
+
+# Logs and cache
+/storage/Logs
+
