@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+define('BASE_PATH', rtrim(dirname($scriptName),'/'));
+
 // --- Load .env file ---
 $envFile = __DIR__ . '/../.env';
 
@@ -53,6 +56,3 @@ spl_autoload_register(function(string $class): void {
 if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// Base path constant
-define('BASE_PATH', dirname($_SERVER['SCRIPT_NAME'] ?? ''));

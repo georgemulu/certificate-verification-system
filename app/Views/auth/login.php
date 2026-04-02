@@ -2,10 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport", content="width=device-width, initial-scale=1.0">
-        <title>Register - Certificate Verification System</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - Certificate Verification System</title>
         <style>
-            *,*::before,*::after{box-sizing: border-box; margin: 0; padding: 0;}
+            *,*::before,*::after {box-sizing: border-box; margin: 0; padding: 0;}
 
             body{
                 font-family: 'Segoe UI', sans-serif;
@@ -25,7 +25,7 @@
                 width: 100%;
                 max-width: 480px;
             }
-            
+
             h1{
                 font-size: 1.5rem;
                 color: #1a202c;
@@ -36,6 +36,16 @@
                 font-size: 0.875rem;
                 color: #718096;
                 margin-bottom: 2rem;
+            }
+
+            .success-msg {
+                background: #f0fff4;
+                border: 1px solid #9ae6b4;
+                border-radius: 6px;
+                padding: 0.75rem 1rem;
+                margin-bottom: 1.25rem;
+                color: #276749;
+                font-size: 0.875rem;
             }
 
             .error-list {
@@ -65,7 +75,7 @@
                 margin-bottom: 0.4rem;
             }
 
-            input, select {
+            input {
                 width: 100%;
                 padding: 0.65rem 0.85rem;
                 border: 1px solid #cbd5e0;
@@ -76,10 +86,10 @@
                 transition: border-color 0.2s;
             }
 
-            input:focus, select:focus {
+            input:focus {
                 outline: none;
-                border-color: #4299e1;
-                box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+                border-color: #4229e1;
+                box-shadow: 0 0 0 3px rgba(66,153,225,0.15);
             }
 
             .btn{
@@ -98,21 +108,32 @@
 
             .btn:hover {background: #2c5282;}
 
-            .login-link {
+            .register-link {
                 text-align: center;
                 margin-top: 1.25rem;
                 font-size: 0.875rem;
                 color: #718096;
             }
 
-            .login-link a {color: #2b6cb0; text-decoration: none; font-weight: 600;}
-            .login-link a:hover {text-decoration: underline;}
+            .register-link a {
+                color: #2b6cb0;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .register-link a:hover {text-decoration: underline;}
         </style>
     </head>
     <body>
-        <div class ="card">
-            <h1> Create Account</h1>
-            <p class="subtitle"> Register to access the Certificate Verification System </p>
+        <div class="card">
+            <h1>Welcome Back</h1>
+            <p class="subtitle"> Sign in to the Certificate Verification System </p>
+
+            <?php if(isset($_GET['registered'])): ?>
+                <div class="success-msg">
+                    Registration successful. You can now sign in.
+                </div>
+            <?php endif; ?>
 
             <?php if(!empty($errors)): ?>
                 <ul class="error-list">
@@ -121,20 +142,9 @@
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
-
-            <form method="POST" action="<?=  BASE_PATH ?>/register" novalidate>
-
-                <div class="form-group">
-                    <label for="fullname"> Full name</label>
-                    <input
-                        type="text"
-                        id="full_name"
-                        name="full_name"
-                        value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>"
-                        placeholder="e.g. John Doe"
-                        required>
-                </div>
-
+            
+            <?php echo "BASE_PATH IS: [" . BASE_PATH . "]"; ?>
+            <form method="POST" action="<?= BASE_PATH ?>/login" novalidate>
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input
@@ -152,38 +162,16 @@
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="Minimum 8 characters"
+                        placeholder="Your password"
                         required>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input
-                        type="password"
-                        id="confirm_password"
-                        name="confirm_password"
-                        placeholder="Repeat your password"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for ="institution_id">Institution</label>
-                    <select id="institution_id" name="institution_id" required>
-                        <option value="" disabled selected> Select your institution</option>
-                        <?php foreach ($institutions as $inst): ?>
-                            <option
-                                value="<?= (int)$inst['id'] ?>"
-                                <?= ((int) ($_POST['institution_id'] ?? 0) === (int)$inst['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($inst['name']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn">Register</button>
+                <button type="submit" class="btn"> Sign In</button>
             </form>
 
-            <p class="login-link">Already have an account? <a href="<?= BASE_PATH ?>/login">Sign in</a></p>
+            <p class="register-link">
+                Don't have an account?<a href="<?= BASE_PATH ?>/register">Register</a>
+            </p>
         </div>
     </body>
 </html>

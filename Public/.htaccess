@@ -2,8 +2,10 @@ Options -Indexes
 RewriteEngine On 
 
 # Allow direct access to real files and folders
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Route everything else through index.php
+
 RewriteRule ^ index.php [QSA,L]
