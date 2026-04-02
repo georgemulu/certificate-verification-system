@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\InstitutionModel;
+use App\Helpers\SessionHelper;
 
 class AuthController
 {
@@ -18,6 +19,7 @@ class AuthController
 
     public function showRegisterForm(): void
     {
+        SessionHelper::redirectIfLoggedIn();
         $institutions = $this->institutionModel->getAll();
         require_once __DIR__ . '/../views/auth/register.php';
     }
@@ -80,6 +82,7 @@ class AuthController
 
     public function showLoginForm(): void
     {
+        SessionHelper::redirectIfLoggedIn();
         require_once __DIR__ . '/../Views/auth/login.php';
     }
 
@@ -122,15 +125,6 @@ class AuthController
         $_SESSION['user_role']      = $user['role'];
         $_SESSION['institution_id'] = $user['institution_id'];
 
-        // Remove the debug code first, then replace the match() with this:
-
-        if ($user['role'] === 'Admin') {
-            header("Location: " . BASE_PATH . "/admin/dashboard");
-        } elseif ($user['role'] === 'Verifier') {
-            header("Location: " . BASE_PATH . "/verifier/dashboard");
-        } else {
-            header("Location: " . BASE_PATH . "/user/dashboard");
-        }
-        exit;
+        SessionHelper::redirectToDashboard();
     }
 }
