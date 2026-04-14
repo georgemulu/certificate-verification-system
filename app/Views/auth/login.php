@@ -143,7 +143,6 @@
                 </ul>
             <?php endif; ?>
             
-            <?php echo "BASE_PATH IS: [" . BASE_PATH . "]"; ?>
             <form method="POST" action="<?= BASE_PATH ?>/login" novalidate>
                 <div class="form-group">
                     <label for="email">Email Address</label>

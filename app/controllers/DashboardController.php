@@ -25,6 +25,16 @@ class DashboardController
         require_once __DIR__ . '/../views/user/dashboard.php';
     }
 
+    public function showVerifierDashboard(): void
+    {
+        SessionHelper::requireRole('Verifier');
+
+        $verifierEmail = SessionHelper::get('user_email');
+        $stats = $this->dashboardModel->getVerifierStats($verifierEmail);
+        $recent = $this->dashboardModel->getVerifierRecentCertificates($verifierEmail);
+        
+    }
+
     public function showAdminDashboard(): void
     {
         SessionHelper::requireRole('Admin');

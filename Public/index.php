@@ -46,16 +46,16 @@ if($uri === '/register' && $method === 'GET') {
     $controller->handleLogin();
 
 }elseif($uri === '/admin/dashboard') {
-    SessionHelper::requireRole('Admin');
-    echo "Admin dashboard coming soon.";
+    $controller = new \App\Controllers\DashboardController();
+    $controller->showAdminDashboard();
 
 }elseif($uri === '/verifier/dashboard') {
-    SessionHelper::requireRole('Verifier');
-    echo "Verifier dashboard coming soon.";
+    $controller = new \App\Controllers\DashboardController();
+    $controller->showVerifierDashboard();
 
 }elseif($uri === '/user/dashboard') {
-    SessionHelper::requireRole('User');
-    echo "User dashboard coming soon.";
+    $controller = new \App\Controllers\DashboardController();
+    $controller->showUserDashboard();
 
 } elseif ($uri === '/logout') {
     SessionHelper::destroy();
