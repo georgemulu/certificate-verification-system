@@ -29,40 +29,48 @@ if ($uri === '') {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if($uri === '/register' && $method === 'GET') {
+if ($uri === '/register' && $method === 'GET') {
     $controller = new \App\Controllers\AuthController();
     $controller->showRegisterForm();
 
-} elseif($uri ==='/register' && $method === 'POST') {
+} elseif ($uri === '/register' && $method === 'POST') {
     $controller = new \App\Controllers\AuthController();
     $controller->handleRegister();
 
-}elseif (($uri === '/' || $uri === '/login') && $method === 'GET') {
+} elseif (($uri === '/' || $uri === '/login') && $method === 'GET') {
     $controller = new \App\Controllers\AuthController();
-    $controller-> showLoginForm();
+    $controller->showLoginForm();
 
-}elseif($uri === '/login' && $method ==='POST') {
+} elseif ($uri === '/login' && $method === 'POST') {
     $controller = new \App\Controllers\AuthController();
     $controller->handleLogin();
 
-}elseif($uri === '/admin/dashboard') {
+} elseif ($uri === '/admin/dashboard') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showAdminDashboard();
 
-}elseif($uri === '/verifier/dashboard') {
+} elseif ($uri === '/verifier/dashboard') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showVerifierDashboard();
 
-}elseif($uri === '/user/dashboard') {
+} elseif ($uri === '/verifier/upload' && $method === 'GET') {
+    $controller = new \App\controllers\CertificateController();
+    $controller->showUploadForm();
+
+} elseif ($uri === '/verifier/upload' && $method === 'POST') {
+    $controller = new \App\controllers\CertificateController();
+    $controller->handleUpload();
+
+} elseif ($uri === '/user/dashboard') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showUserDashboard();
 
 } elseif ($uri === '/logout') {
     SessionHelper::destroy();
-    header("Location: ". BASE_PATH ."/login");
+    header("Location: " . BASE_PATH . "/login");
     exit;
-
-}else {
+    
+} else {
     http_response_code(404);
     echo "404 - Page not found";
 }

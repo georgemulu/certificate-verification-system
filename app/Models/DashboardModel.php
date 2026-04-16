@@ -36,7 +36,7 @@ class DashboardModel
             SELECT certificate_code, owner_name, certificate_type,
                     issued_at, is_revoked
             FROM certificates
-            WHERE uploaded_by = :user_id
+            WHERE uploaded_by = :uploaded_by
             ORDER BY issued_at DESC
             LIMIT :limit
         ");

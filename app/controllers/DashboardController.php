@@ -29,9 +29,11 @@ class DashboardController
     {
         SessionHelper::requireRole('Verifier');
 
-        $verifierEmail = SessionHelper::get('user_email');
-        $stats = $this->dashboardModel->getVerifierStats($verifierEmail);
-        $recent = $this->dashboardModel->getVerifierRecentCertificates($verifierEmail);
+        $verifierId = (int) SessionHelper::get('user_id');
+        $stats = $this->dashboardModel->getVerifierStats($verifierId);
+        $recent = $this->dashboardModel->getVerifierRecentCertificates($verifierId);
+
+        require_once __DIR__. '/../Views/verifier/dashboard.php';
         
     }
 

@@ -100,4 +100,3 @@ $rolePillClass = match ($userRole) {
             </div>
         </div>
     </nav>
-</div>

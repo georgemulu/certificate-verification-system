@@ -38,7 +38,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
             </div>
             <div class="stat-label">Last Upload</div>
             <div class="stat-value" style="font-size: 1rem; padding-top: 0.25rem;">
-                <?= $stats['last-upload'] ? date('M d, Y', strtotime($stats['last_upload'])) : '-' ?>
+                <?= $stats['last_upload'] ? date('M d, Y', strtotime($stats['last_upload'])) : '-' ?>
             </div>
         </div>
     </div>
