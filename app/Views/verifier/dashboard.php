@@ -55,9 +55,11 @@ require_once __DIR__ . '/../layouts/navbar.php';
             <table>
                 <thead>
                     <tr>
-                        <th>Certificate Code</th>
+                        <th>Serial No.</th>
+                        <th>Verification Code</th>
                         <th>Owner Name</th>
                         <th>Type</th>
+                        <th>Course</th>
                         <th>Issued At</th>
                         <th>Status</th>
                     </tr>

@@ -17,7 +17,10 @@ require_once __DIR__ . '/../layouts/navbar.php';
             <i data-lucide="circle-check"></i>
             <div>
                 <strong>Certificate uploaded successfully.</strong>
-                <p>Certificate code: <code><?= htmlspecialchars($_GET['code'] ?? '') ?></code></p>
+                <p>Verification code: <code><?= htmlspecialchars($_GET['code'] ?? '') ?></code></p>
+                <p style="margin-top:0.35rem; font-size:0.8rem;">
+                    Keep this code safe - it is the unique identifier used to verify this certificate.
+                </p>
             </div>
         </div>
     <?php endif; ?>
@@ -43,37 +46,66 @@ require_once __DIR__ . '/../layouts/navbar.php';
                         id="owner_name"
                         name="owner_name"
                         value="<?= htmlspecialchars($_POST['owner_name'] ?? '') ?>"
-                        placeholder="e.g John Doe"
                         required> 
                     <span class="form-hint"> Full name of the person this certificate belongs to.</span>
                 </div>
 
                 <div class="form-group">
                     <label for="certificate_type">Certificate Type</label>
-                    <input
-                        type="text"
-                        id="certificate_type"
-                        name="certificate_type"
-                        value="<?= htmlspecialchars($_POST['certificate_type'] ?? '') ?>"
-                        placeholder="e.g. Bachelor of Science in Computer Science"
-                        required> 
-                    <span class="form-hint"> Full title of the certificate or qualification.</span>
+                    <select id="certificate_type" name="certificate_type" required>
+                        <option value="" disabled <?= empty($_POST['certificate_type']) ? 'selected' : '' ?>>
+                            Select certificate type
+                        </option>
+                        <?php
+                        $types = ['Certificate', 'Diploma', 'Degree', 'Masters' , 'PhD'];
+                        foreach($types as $type):
+                        ?>
+                            <option value="<?= $type ?>"
+                                <?= ($_POST['certificate_type'] ?? '') === $type ? 'selected' : '' ?>>
+                                <?= $type ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <span class="form-hint"> The level of the cerrtificate being registered.</span>
                 </div>
-        
-
+            
             <div class="form-group">
-                <label>Certificate Code</label>
-                <input type="text" value="Auto-generated on upload" disabled>
-                <span class="form-hint">A unique code will be automatically generated and assigned.</span>
+                <label for="course">Course / Programme</label>
+                <input
+                    type="text"
+                    id="course"
+                    name="course"
+                    value="<?= htmlspecialchars($_POST['course'] ?? '') ?>"
+                    placeholder="e.g. Bachelor of Science in Computer Science"
+                    required
+                >
+                <span class="form-hint">The full name of the course or programme of study.</span>
             </div>
 
             <div class="form-group">
-                <label>Institution</label>
+                <label for="serial_number"> Certificate Serial Number</label>
                 <input
                     type="text"
-                    value="<?= htmlspecialchars(SessionHelper::get('institution_id') ? 'Linked to your account' : 'Not linked') ?>"
-                    disabled> 
-                <span class="form-hint">Certificates are automatically linked to your institution.</span>
+                    id="serial_number"
+                    name="serial_number"
+                    value="<?= htmlspecialchars($_POST['serial_number'] ?? '') ?>"
+                    placeholder="e.g. CUEA/2023/00142"
+                    required> 
+                <span class="form-hint">
+                    The serial number printed on the physical certificate.
+                    Must be unique within your institution.
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="issued_at">Date Issued</label>
+                <input
+                    type = "date"
+                    id = "issued_at"
+                    name = "issued_at"
+                    value = "<?= htmlspecialchars($_POST['issued_at'] ?? '') ?>"
+                    max="<?=  date('Y-m-d') ?>"
+                    required> 
             </div>
 
             <div class="form-actions">
@@ -120,12 +152,12 @@ require_once __DIR__ . '/../layouts/navbar.php';
         color: var(--danger);
     }
 
-    .alert strong {display: block; margin-bottom: 0.2rem;}
+    .alert strong {display: block; margin-bottom: 0.25rem;}
     .alert p {margin: 0;}
 
     .alert code {
         background: rgba(0,0,0,0.08);
-        padding: 0.15rem 0.4rem;
+        padding: 0.15rem 0.45rem;
         border-radius: 4px;
         font-family: monospace;
         font-size: 0.9rem;
@@ -167,7 +199,8 @@ require_once __DIR__ . '/../layouts/navbar.php';
         transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .form-group input:focus {
+    .form-group input:focus, 
+    .form-group select:focus {
         outline: none;
         border-color: var(--accent);
         box-shadow: 0 0 0 3px rgba(45,106,159,0.12);

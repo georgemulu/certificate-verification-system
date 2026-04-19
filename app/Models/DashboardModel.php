@@ -33,11 +33,11 @@ class DashboardModel
     public function getVerifierRecentCertificates(int $uploadedBy, int $limit = 5): array
     {
         $stmt = $this->db->prepare("
-            SELECT certificate_code, owner_name, certificate_type,
-                    issued_at, is_revoked
+            SELECT certificate_code, serial_number, owner_name,
+                    certificate_type, course, issued_at, is_revoked
             FROM certificates
             WHERE uploaded_by = :uploaded_by
-            ORDER BY issued_at DESC
+            ORDER BY uploaded_at DESC
             LIMIT :limit
         ");
         $stmt->bindValue(':uploaded_by', $uploadedBy, PDO::PARAM_INT);
