@@ -22,6 +22,7 @@ class CertificateController
 
     public function handleUpload(): void
     {
+        \App\Helpers\CsrfHelper::validate();
         SessionHelper::requireRole('Verifier');
 
         $ownerName = trim($_POST['owner_name'] ?? '');

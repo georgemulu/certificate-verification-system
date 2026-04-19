@@ -144,6 +144,8 @@
             <?php endif; ?>
             
             <form method="POST" action="<?= BASE_PATH ?>/login" novalidate>
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\App\Helpers\CsrfHelper::getToken()) ?>">
+                
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input

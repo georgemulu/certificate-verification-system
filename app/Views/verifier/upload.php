@@ -39,6 +39,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
     <div class="form-card">
         <form method="POST" action="<?= BASE_PATH ?>/verifier/upload" novalidate>
 
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\App\Helpers\CsrfHelper::getToken()) ?>">
                 <div class="form-group">
                     <label for="owner_name">Certificate Owner Name</label>
                     <input

@@ -26,6 +26,8 @@ class AuthController
 
     public function handleRegister(): void
     {
+        \app\Helpers\CsrfHelper::validate();
+
         $fullName       = trim($_POST['full_name']      ??'');
         $email          = trim($_POST['email']          ??'');
         $password       =       $_POST['password']      ??'';
@@ -88,7 +90,7 @@ class AuthController
 
     public function handleLogin(): void
     {
-        
+        \App\Helpers\CsrfHelper::validate();
         $email    = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) ?? '');
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_DEFAULT)     ?? '');
 
