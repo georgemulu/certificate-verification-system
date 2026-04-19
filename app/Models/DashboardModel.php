@@ -22,7 +22,7 @@ class DashboardModel
             SELECT
                 COUNT(*)                                            AS total_uploaded,
                 SUM(CASE WHEN is_revoked = true THEN 1 ELSE 0 END) AS total_revoked,
-                MAX(issued_at)                                      AS last_upload
+                MAX(uploaded_at)                                      AS last_upload
             FROM  certificates
             WHERE uploaded_by = :uploaded_by                      
         ");
@@ -33,7 +33,7 @@ class DashboardModel
     public function getVerifierRecentCertificates(int $uploadedBy, int $limit = 5): array
     {
         $stmt = $this->db->prepare("
-            SELECT certificate_code, serial_number, owner_name,
+            SELECT serial_number, serial_number, owner_name,
                     certificate_type, course, issued_at, is_revoked
             FROM certificates
             WHERE uploaded_by = :uploaded_by

@@ -56,7 +56,6 @@ require_once __DIR__ . '/../layouts/navbar.php';
                 <thead>
                     <tr>
                         <th>Serial No.</th>
-                        <th>Verification Code</th>
                         <th>Owner Name</th>
                         <th>Type</th>
                         <th>Course</th>
@@ -67,9 +66,10 @@ require_once __DIR__ . '/../layouts/navbar.php';
                 <tbody>
                     <?php foreach ($recent as $cert): ?>
                         <tr>
-                            <td><?= htmlspecialchars($cert['certificate_code']) ?></td>
+                            <td><?= htmlspecialchars($cert['serial_number']) ?></td>
                             <td><?= htmlspecialchars($cert['owner_name']) ?></td>
                             <td><?= htmlspecialchars($cert['certificate_type']) ?></td>
+                            <td><?= htmlspecialchars($cert['course']) ?></td>
                             <td><?= date('M d, Y', strtotime($cert['issued_at'])) ?></td>
                             <td>
                                 <span class="badge <?= $cert['is_revoked'] ? 'badge-danger' : 'badge-success' ?>">

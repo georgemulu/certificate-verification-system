@@ -143,7 +143,6 @@
                         id="email"
                         name="email"
                         value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
-                        placeholder="john@institution.edu"
                         required>
                 </div>
 

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\InstitutionModel;
 use App\Helpers\SessionHelper;
+use App\Helpers\CsrfHelper;
 
 class AuthController
 {
@@ -26,7 +27,7 @@ class AuthController
 
     public function handleRegister(): void
     {
-        \app\Helpers\CsrfHelper::validate();
+        CsrfHelper::validate();
 
         $fullName       = trim($_POST['full_name']      ??'');
         $email          = trim($_POST['email']          ??'');
@@ -90,7 +91,7 @@ class AuthController
 
     public function handleLogin(): void
     {
-        \App\Helpers\CsrfHelper::validate();
+        CsrfHelper::validate();
         $email    = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) ?? '');
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_DEFAULT)     ?? '');
 

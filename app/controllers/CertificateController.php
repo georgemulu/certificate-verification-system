@@ -4,6 +4,8 @@ namespace App\controllers;
 
 use App\Models\CertificateModel;
 use App\Helpers\SessionHelper;
+use App\Helpers\CsrfHelper;
+use App\Helpers\CertificateHelper;
 
 class CertificateController
 {
@@ -22,8 +24,8 @@ class CertificateController
 
     public function handleUpload(): void
     {
-        \App\Helpers\CsrfHelper::validate();
         SessionHelper::requireRole('Verifier');
+        CsrfHelper::validate();
 
         $ownerName = trim($_POST['owner_name'] ?? '');
         $certificateType = trim($_POST['certificate_type'] ?? '');
@@ -88,7 +90,16 @@ class CertificateController
             return;
         }
 
-        $certificateCode = $this->certificateModel->generateUniqueCode();
+        $issuedAt = date('Y-m-d', strtotime($issuedAt));
+
+        $certificateCode = CertificateHelper::computeHash(
+            $serialNumber,
+            $ownerName,
+            $course,
+            $certificateType,
+            $issuedAt,
+            $institutionId
+        );
 
         $created = $this->certificateModel->create(
             $ownerName,
@@ -102,7 +113,7 @@ class CertificateController
         );
 
         if($created) {
-            header("Location: " . BASE_PATH . "/verifier/upload?success=1&code=" .urlencode($certificateCode));
+            header("Location: " . BASE_PATH . "/verifier/upload?success=1");
             exit;
         }
 

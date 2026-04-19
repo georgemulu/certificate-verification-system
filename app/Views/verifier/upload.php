@@ -17,10 +17,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
             <i data-lucide="circle-check"></i>
             <div>
                 <strong>Certificate uploaded successfully.</strong>
-                <p>Verification code: <code><?= htmlspecialchars($_GET['code'] ?? '') ?></code></p>
-                <p style="margin-top:0.35rem; font-size:0.8rem;">
-                    Keep this code safe - it is the unique identifier used to verify this certificate.
-                </p>
+                <p>The certificate has been registered and is now verifiable</p>
             </div>
         </div>
     <?php endif; ?>
@@ -48,7 +45,6 @@ require_once __DIR__ . '/../layouts/navbar.php';
                         name="owner_name"
                         value="<?= htmlspecialchars($_POST['owner_name'] ?? '') ?>"
                         required> 
-                    <span class="form-hint"> Full name of the person this certificate belongs to.</span>
                 </div>
 
                 <div class="form-group">
@@ -67,7 +63,6 @@ require_once __DIR__ . '/../layouts/navbar.php';
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <span class="form-hint"> The level of the cerrtificate being registered.</span>
                 </div>
             
             <div class="form-group">
@@ -80,7 +75,6 @@ require_once __DIR__ . '/../layouts/navbar.php';
                     placeholder="e.g. Bachelor of Science in Computer Science"
                     required
                 >
-                <span class="form-hint">The full name of the course or programme of study.</span>
             </div>
 
             <div class="form-group">
@@ -91,11 +85,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
                     name="serial_number"
                     value="<?= htmlspecialchars($_POST['serial_number'] ?? '') ?>"
                     placeholder="e.g. CUEA/2023/00142"
-                    required> 
-                <span class="form-hint">
-                    The serial number printed on the physical certificate.
-                    Must be unique within your institution.
-                </span>
+                    required>
             </div>
 
             <div class="form-group">
@@ -172,7 +162,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
         box-shadow: var(--card-shadow);
         border: 1px solid var(--border);
         padding: 2rem;
-        max-width: 640px;
+        max-width: 500px;
         animation: fadeUp 0.4s ease both;
     }
 
@@ -189,7 +179,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
     }
 
     .form-group input {
-        width: 100%;
+        width: 80%;
         padding: 0.65rem 0.85rem;
         border: 1px solid var(--border);
         border-radius: 6px;
@@ -218,15 +208,6 @@ require_once __DIR__ . '/../layouts/navbar.php';
         font-size: 0.78rem;
         color: var(--text-secondary);
         margin-top: 0.35rem;
-    }
-
-    .form-actions {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border);
     }
 
     .btn-primary {
