@@ -81,6 +81,7 @@ class SessionHelper
             );
         }
 
+        session_unset();
         session_destroy();
     }
 }

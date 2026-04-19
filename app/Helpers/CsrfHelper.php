@@ -24,7 +24,7 @@ class CsrfHelper
         $submitted = $_POST['csrf_token'] ?? '';
         $expected = $_SESSION[self::TOKEN_KEY] ?? '';
 
-        if(!$expected || hash_equals($expected, $submitted)) {
+        if(!$expected || !hash_equals($expected, $submitted)) {
             http_response_code(403);
             die('Invalid CSRF token. Please go back and try again.');
         }

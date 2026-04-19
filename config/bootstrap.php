@@ -22,7 +22,6 @@ if (file_exists($envFile)) {
             $key   = trim($key);
             $value = trim($value);
 
-            // Strip surrounding quotes if present: "value" or 'value'
             if (
                 (str_starts_with($value, '"') && str_ends_with($value, '"')) ||
                 (str_starts_with($value, "'") && str_ends_with($value, "'"))
@@ -53,6 +52,37 @@ spl_autoload_register(function(string $class): void {
     }
 });
 
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => false, //Set to true before production to deployment
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+
+session_start();
+
+if(isset($_SESSION['user_id'])) {
+    $expectedAgent = $_SESSION['_ua'] ?? null;
+    $currentAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+    if($expectedAgent === null) {
+        $_SESSION['_ua'] = $currentAgent;
+    } elseif (!hash_equals($expectedAgent, $currentAgent)) {
+        
+        session_unset();
+        session_destroy();
+        header('Location: '. BASE_PATH . '/login');
+        exit;
+    }
+
+    $timeout = 30 * 60;
+    if (isset($_SESSION['_last_active']) && (time() - $_SESSION['_last_active']) > $timeout) {
+        session_unset();
+        session_destroy();
+        header('Location:' . BASE_PATH . '/login?timeout=1');
+        exit;
+    }
+
+    $_SESSION['_last_active'] = time();
 }
