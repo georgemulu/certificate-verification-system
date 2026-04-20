@@ -57,5 +57,21 @@ class CertificateModel
         ]);
         return $stmt->fetch() !== false;
     }
-    
+
+    public function findBySerialAndInstitution(string $serialNumber, int $institutionId):array|false
+    {
+        $stmt = $this->db->prepare("
+            SELECT id, owner_name, certificate_type, course,serial_number,
+                certificate_code, issued_at, institution_id, is_revoked
+            FROM certificates
+            WHERE serial_number = :serial_number
+            AND institution_id = :institution_id
+            LIMIT 1
+        ");
+        $stmt->execute([
+            ':serial_number' => $serialNumber,
+            ':institution_id' => $institutionId,
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

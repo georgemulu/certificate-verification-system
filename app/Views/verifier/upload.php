@@ -197,12 +197,6 @@ require_once __DIR__ . '/../layouts/navbar.php';
         box-shadow: 0 0 0 3px rgba(45,106,159,0.12);
     }
 
-    .form-group input:disabled {
-        background: #f4f7fb;
-        color: var(--text-secondary);
-        cursor: not-allowed;
-    }
-
     .form-hint {
         display: block;
         font-size: 0.78rem;

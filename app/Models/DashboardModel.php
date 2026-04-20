@@ -65,7 +65,7 @@ class DashboardModel
     {
         $stmt = $this->db->prepare("
             SELECT vl.verified_at, vl.status,
-                    c.certificate_code, c.owner_name, c.certificate_type
+                    c.serial_number, c.owner_name, c.certificate_type
             FROM verification_logs vl
             JOIN certificates c ON c.id = vl.certificate_id
             WHERE vl.verified_by = :email

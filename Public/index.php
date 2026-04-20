@@ -65,6 +65,14 @@ if ($uri === '/register' && $method === 'GET') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showUserDashboard();
 
+} elseif ($uri === '/user/verify' && $method === 'GET') {
+    $controller = new \App\Controllers\VerificationController();
+    $controller->showVerifyForm();
+
+} elseif($uri === '/user/verify' && $method === 'POST') {
+    $controller = new \App\Controllers\VerificationController();
+    $controller->handleVerify();
+        
 } elseif ($uri === '/logout') {
     SessionHelper::destroy();
     header("Location: " . BASE_PATH . "/login");

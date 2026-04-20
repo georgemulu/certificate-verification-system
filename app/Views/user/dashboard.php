@@ -55,7 +55,7 @@ require_once __DIR__ . '/../layouts/navbar.php';
             <table>
                 <thead>
                     <tr>
-                        <th>Certificate Code</th>
+                        <th>Serial number</th>
                         <th>Owner Name</th>
                         <th>Type</th>
                         <th>Verified At</th>
@@ -65,13 +65,13 @@ require_once __DIR__ . '/../layouts/navbar.php';
                 <tbody>
                     <?php foreach ($recent as $cert): ?>
                         <tr>
-                            <td><?= htmlspecialchars($cert['certificate_code']) ?></td>
+                            <td><?= htmlspecialchars($cert['serial_number']) ?></td>
                             <td><?= htmlspecialchars($cert['owner_name']) ?></td>
                             <td><?= htmlspecialchars($cert['certificate_type']) ?></td>
-                            <td><?= date('M d, Y H:i', strtotime($cert['issued_at'])) ?></td>
+                            <td><?= date('M d, Y H:i', strtotime($cert['verified_at'])) ?></td>
                             <td>
-                                <span class="badge <?= $log['status'] === 'success' ? 'badge-success' : 'badge-danger' ?>">
-                                    <?= ucfirst($log['status']) ?>
+                                <span class="badge <?= $cert['status'] === 'success' ? 'badge-success' : 'badge-danger' ?>">
+                                    <?= ucfirst($cert['status']) ?>
                                 </span>
                             </td>
                         </tr>

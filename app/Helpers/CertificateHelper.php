@@ -13,6 +13,7 @@ class CertificateHelper
         int $institutionId
     ): string {
         $salt = $_ENV['CERT_HASH_SALT'] ?? '';
+        $issuedAt = date('Y-m-d', strtotime($issuedAt));
 
         $payload = $salt
             . $serialNumber . '|'
