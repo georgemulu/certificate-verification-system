@@ -49,6 +49,18 @@ if ($uri === '/register' && $method === 'GET') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showAdminDashboard();
 
+} elseif ($uri === '/admin/institutions' && $method === 'GET') {
+    $controller = new \App\Controllers\InstitutionController();
+    $controller->showInstitutions();
+    
+} elseif ($uri === '/admin/institutions/create' && $method ==='POST') {
+    $controller = new \App\Controllers\InstitutionController();
+    $controller->handleCreate();
+
+} elseif ($uri === '/admin/institutions/delete' && $method === 'POST') {
+    $controller = new \App\Controllers\InstitutionController();
+    $controller->handleDelete();
+
 } elseif ($uri === '/verifier/dashboard') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showVerifierDashboard();
