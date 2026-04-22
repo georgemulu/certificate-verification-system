@@ -73,6 +73,10 @@ if ($uri === '/register' && $method === 'GET') {
     $controller = new \App\Controllers\UserController();
     $controller->handleUpdateInstitution();
 
+} elseif ($uri === '/admin/logs' && $method === 'GET') {
+    $controller = new \App\Controllers\LogController();
+    $controller->showLogs();
+        
 } elseif ($uri === '/verifier/dashboard') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showVerifierDashboard();
