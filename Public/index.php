@@ -61,6 +61,18 @@ if ($uri === '/register' && $method === 'GET') {
     $controller = new \App\Controllers\InstitutionController();
     $controller->handleDelete();
 
+} elseif ($uri === '/admin/users' && $method === 'GET') {
+    $controller = new \App\Controllers\UserController();
+    $controller->showUsers();
+
+} elseif ($uri === '/admin/users/role' && $method === 'POST') {
+    $controller = new \App\Controllers\UserController();
+    $controller->handleUpdateRole();
+
+} elseif ($uri === '/admin/users/institution' && $method === 'POST') {
+    $controller = new \App\Controllers\UserController();
+    $controller->handleUpdateInstitution();
+
 } elseif ($uri === '/verifier/dashboard') {
     $controller = new \App\Controllers\DashboardController();
     $controller->showVerifierDashboard();

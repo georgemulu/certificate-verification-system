@@ -166,20 +166,6 @@
                         required>
                 </div>
 
-                <div class="form-group">
-                    <label for ="institution_id">Institution</label>
-                    <select id="institution_id" name="institution_id" required>
-                        <option value="" disabled selected> Select your institution</option>
-                        <?php foreach ($institutions as $inst): ?>
-                            <option
-                                value="<?= (int)$inst['id'] ?>"
-                                <?= ((int) ($_POST['institution_id'] ?? 0) === (int)$inst['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($inst['name']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
                 <button type="submit" class="btn">Register</button>
             </form>
 

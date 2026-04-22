@@ -10,18 +10,15 @@ use App\Helpers\CsrfHelper;
 class AuthController
 {
     private UserModel $userModel;
-    private InstitutionModel $institutionModel;
 
     public function __construct()
     {
         $this->userModel        =  new UserModel();
-        $this->institutionModel =  new InstitutionModel();
     }
 
     public function showRegisterForm(): void
     {
         SessionHelper::redirectIfLoggedIn();
-        $institutions = $this->institutionModel->getAll();
         require_once __DIR__ . '/../views/auth/register.php';
     }
 
@@ -33,7 +30,6 @@ class AuthController
         $email          = trim($_POST['email']          ??'');
         $password       =       $_POST['password']      ??'';
         $confirmPassword =      $_POST['confirm_password']??'';
-        $institutionId  = (int)($_POST['institution_id'] ?? 0);
 
         //Validation
         $errors = [];
@@ -54,23 +50,12 @@ class AuthController
             $errors[] = "Passwords do not match.";
         }
 
-        if($institutionId <=0){
-            $errors[] = "Please select a valid institution";
-        }
-
         if($this->userModel->emailExists($email)){
             $errors[] = "An account with this email already exists.";
         }
 
-        //re-render form--
-        if(!empty($errors)){
-            $institutions = $this->institutionModel->getAll();
-            require_once __DIR__ . '/../views/auth/register.php';
-            return;
-        }
-
         //---Insert user ---
-        $created = $this->userModel->create($fullName, $email, $password, $institutionId);
+        $created = $this->userModel->create($fullName, $email, $password);
 
         if($created){
             header("Location: ". BASE_PATH . "/login?registered=1");
@@ -79,7 +64,6 @@ class AuthController
 
         //Fallback: unexpected DB failure
         $errors[] = "Registration failed. Please try again.";
-        $institutions = $this->institutionModel->getAll();
         require_once __DIR__ . '/../views/auth/register.php';
     }
 
