@@ -120,4 +120,36 @@ class CertificateController
         $errors[] = "Upload failed. Please try again.";
         require_once __DIR__ . '/../Views/verifier/upload.php';
     }
+
+    public function showCertificates(): void
+    {
+        SessionHelper::requireRole('Verifier');
+        $uploadedBy   = (int) SessionHelper::get('user_id');
+        $certificates = $this->certificateModel->getByVerifier($uploadedBy);
+        require_once __DIR__ . '/../Views/verifier/certificates.php';
+    }
+
+    public function handleRevoke(): void
+    {
+        SessionHelper::requireRole('Verifier');
+        CsrfHelper::validate();
+
+        $id         = (int) ($_POST['certificate_id'] ?? 0);
+        $uploadedBy = (int) SessionHelper::get('user_id');
+
+        if ($id <= 0) {
+            header("Location: " . BASE_PATH . "/verifier/certificates?error=invalid");
+            exit;
+        }
+
+        $revoked = $this->certificateModel->revoke($id, $uploadedBy);
+
+        if ($revoked) {
+            header("Location: " . BASE_PATH . "/verifier/certificates?success=revoked");
+            exit;
+        }
+
+        header("Location: " . BASE_PATH . "/verifier/certificates?error=failed");
+        exit;
+    }
 }

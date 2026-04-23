@@ -74,4 +74,31 @@ class CertificateModel
         ]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getByVerifier(int $uploadedBy): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT id, owner_name, certificate_type, course,
+                serial_number, issued_at, is_revoked
+            FROM certificates
+            WHERE uploaded_by = :uploaded_by
+            ORDER BY issued_at DESC
+        ");
+        $stmt->execute([':uploaded_by' => $uploadedBy]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function revoke(int $id, int $uploadedBy): bool
+    {
+        $stmt = $this->db->prepare("
+            UPDATE certificates
+            SET is_revoked = true
+            WHERE id = :id
+            AND uploaded_by = :uploaded_by
+        ");
+        return $stmt->execute([
+            ':id'          => $id,
+            ':uploaded_by' => $uploadedBy,
+        ]);
+    }
 }
