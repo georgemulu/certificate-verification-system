@@ -105,6 +105,9 @@ if ($uri === '/register' && $method === 'GET') {
     SessionHelper::destroy();
     header("Location: " . BASE_PATH . "/login");
     exit;
+} elseif ($uri === '/user/logs' && $method === 'GET') {
+    $controller = new \App\Controllers\VerificationController();
+    $controller->showLogs();
     
 } else {
     http_response_code(404);

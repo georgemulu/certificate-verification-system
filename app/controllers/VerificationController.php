@@ -83,4 +83,12 @@ class VerificationController
 
         require_once __DIR__ . '/../Views/user/verify.php';
     }
+
+    public function showLogs(): void
+    {
+        SessionHelper::requireRole('User');
+        $userEmail = SessionHelper::get('user_email');
+        $logs      = $this->verificationModel->getByUser($userEmail);
+        require_once __DIR__ . '/../Views/user/logs.php';
+    }
 }
